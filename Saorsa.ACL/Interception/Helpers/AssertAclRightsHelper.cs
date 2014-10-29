@@ -13,8 +13,8 @@ namespace Saorsa.ACL.Interception.Helpers
             var acl = JsonConvert.DeserializeObject<List<ACL>>(entityAcl);
             return acl.Any(a => a.Action == ACLAction.Write &&
                                 (
-                                    (a.Users!=null && a.Users.Any(u => u.Id == userId)) ||
-                                    (a.Groups!= null && userGroups != null && a.Groups.Any(g=>userGroups.Any(ug=>ug.Id == g.Id)))
+                                    (a.U!=null && a.U.Any(u => u.Id == userId)) ||
+                                    (a.G!= null && userGroups != null && a.G.Any(g=>userGroups.Any(ug=>ug.Id == g.Id)))
                                 )
                 );
         }
@@ -23,8 +23,8 @@ namespace Saorsa.ACL.Interception.Helpers
             var acl = JsonConvert.DeserializeObject<List<ACL>>(entityAcl);
             return acl.Any(a => (a.Action == ACLAction.Write || a.Action == ACLAction.Read) &&
                                 (
-                                    (a.Users!=null && a.Users.Any(u => u.Id == userId)) ||
-                                    (a.Groups != null && userGroups != null && a.Groups.Any(g => userGroups.Any(ug => ug.Id == g.Id)))
+                                    (a.U!=null && a.U.Any(u => u.Id == userId)) ||
+                                    (a.G != null && userGroups != null && a.G.Any(g => userGroups.Any(ug => ug.Id == g.Id)))
                                 )
                 );
         }

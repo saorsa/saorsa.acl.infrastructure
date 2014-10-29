@@ -125,11 +125,11 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                                           new ACL
                                           {
                                               Action = ACLAction.Read,
-                                              Users = new List<AclUser>
+                                              U = new List<AclUser>
                                                       {
                                                           new AclUser("1")
                                                       },
-                                              Groups = new List<AclGroup>
+                                              G = new List<AclGroup>
                                                        {
                                                            new AclGroup
                                                            {
@@ -140,11 +140,11 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                                           new ACL
                                           {
                                               Action = ACLAction.Write,
-                                              Users = new List<AclUser>
+                                              U = new List<AclUser>
                                                       {
                                                           new AclUser("1")
                                                       },
-                                              Groups = new List<AclGroup>
+                                              G = new List<AclGroup>
                                                        {
                                                            new AclGroup
                                                            {
@@ -185,11 +185,11 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                                           new ACL
                                           {
                                               Action = ACLAction.Read,
-                                              Users = new List<AclUser>
+                                              U = new List<AclUser>
                                                       {
                                                           new AclUser("1")
                                                       },
-                                              Groups = new List<AclGroup>
+                                              G = new List<AclGroup>
                                                        {
                                                            new AclGroup
                                                            {
@@ -200,11 +200,11 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                                           new ACL
                                           {
                                               Action = ACLAction.Write,
-                                              Users = new List<AclUser>
+                                              U = new List<AclUser>
                                                       {
                                                           new AclUser("8")
                                                       },
-                                              Groups = new List<AclGroup>
+                                              G = new List<AclGroup>
                                                        {
                                                            new AclGroup
                                                            {
@@ -229,11 +229,11 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                                               new ACL
                                               {
                                                   Action = ACLAction.Read,
-                                                  Users = new List<AclUser>
+                                                  U = new List<AclUser>
                                                           {
                                                               new AclUser("1")
                                                           },
-                                                  Groups = new List<AclGroup>
+                                                  G = new List<AclGroup>
                                                            {
                                                                new AclGroup
                                                                {
@@ -244,11 +244,11 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                                               new ACL
                                               {
                                                   Action = ACLAction.Write,
-                                                  Users = new List<AclUser>
+                                                  U = new List<AclUser>
                                                           {
                                                               new AclUser("1")
                                                           },
-                                                  Groups = new List<AclGroup>
+                                                  G = new List<AclGroup>
                                                            {
                                                                new AclGroup
                                                                {
@@ -276,11 +276,11 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                                               new ACL
                                               {
                                                   Action = ACLAction.Read,
-                                                  Users = new List<AclUser>
+                                                  U = new List<AclUser>
                                                           {
                                                               new AclUser("1")
                                                           },
-                                                  Groups = new List<AclGroup>
+                                                  G = new List<AclGroup>
                                                            {
                                                                new AclGroup
                                                                {
@@ -291,11 +291,11 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                                               new ACL
                                               {
                                                   Action = ACLAction.Write,
-                                                  Users = new List<AclUser>
+                                                  U = new List<AclUser>
                                                           {
                                                               new AclUser("7")
                                                           },
-                                                  Groups = new List<AclGroup>
+                                                  G = new List<AclGroup>
                                                            {
                                                                new AclGroup
                                                                {

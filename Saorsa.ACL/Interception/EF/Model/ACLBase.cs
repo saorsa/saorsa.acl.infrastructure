@@ -47,9 +47,9 @@
             //In case there are any repeating actions - group all information in one
             if (acls.Count(a => a.Action == ACLAction.Read) > 1)
             {
-                var users = acls.Where(a => a.Action == ACLAction.Read).SelectMany(a => a.Users)
+                var users = acls.Where(a => a.Action == ACLAction.Read).SelectMany(a => a.U)
                                 .Distinct(new AclUsersComparer()).ToList();
-                var groups = acls.Where(a => a.Action == ACLAction.Read).SelectMany(a => a.Groups)
+                var groups = acls.Where(a => a.Action == ACLAction.Read).SelectMany(a => a.G)
                                 .Distinct(new AclGroupComparer()).ToList();
                 acl.Add(new ACL(ACLAction.Read,users,groups));
             }
@@ -61,9 +61,9 @@
             }
             if (acls.Count(a => a.Action == ACLAction.Write) > 1)
             {
-                var users = acls.Where(a => a.Action == ACLAction.Write).SelectMany(a => a.Users)
+                var users = acls.Where(a => a.Action == ACLAction.Write).SelectMany(a => a.U)
                                 .Distinct(new AclUsersComparer()).ToList();
-                var groups = acls.Where(a => a.Action == ACLAction.Write).SelectMany(a => a.Groups)
+                var groups = acls.Where(a => a.Action == ACLAction.Write).SelectMany(a => a.G)
                                 .Distinct(new AclGroupComparer()).ToList();
                 acl.Add(new ACL(ACLAction.Write, users, groups));
             }
@@ -84,17 +84,17 @@
             {
                 var existingAcl = this.Acls.First(a => a.Action == acl.Action);
                 //Add the non existing users to the acl
-                if (acl.Users != null && acl.Users.Count > 0)
-                    existingAcl.Users.AddRange(acl.Users.Where(a => !existingAcl.Users.Any(au => au.Equals(a))));
+                if (acl.U != null && acl.U.Count > 0)
+                    existingAcl.U.AddRange(acl.U.Where(a => !existingAcl.U.Any(au => au.Equals(a))));
                 //Add the non existing groups to the acl
-                if (acl.Groups != null && acl.Groups.Count > 0)
-                    existingAcl.Groups.AddRange(acl.Groups.Where(a => !existingAcl.Groups.Any(au => au.Equals(a))));
+                if (acl.G != null && acl.G.Count > 0)
+                    existingAcl.G.AddRange(acl.G.Where(a => !existingAcl.G.Any(au => au.Equals(a))));
             }
             else
             {
                 //Ensure that there are no duplicating items
-                acl.Users = acl.Users.Distinct(new AclUsersComparer()).ToList();
-                acl.Groups = acl.Groups.Distinct(new AclGroupComparer()).ToList();
+                acl.U = acl.U.Distinct(new AclUsersComparer()).ToList();
+                acl.G = acl.G.Distinct(new AclGroupComparer()).ToList();
                 this.Acls.Add(acl);
             }
             //Trigger setter cleanup
@@ -108,11 +108,11 @@
             if (existingAcl != null)
             {
                 //Add the non existing users to the acl
-                if (acl.Users != null && acl.Users.Count > 0)
-                    existingAcl.Users.RemoveAll(a=>acl.Users.Any(au=>au.Id==a.Id));
+                if (acl.U != null && acl.U.Count > 0)
+                    existingAcl.U.RemoveAll(a=>acl.U.Any(au=>au.Id==a.Id));
                 //Add the non existing groups to the acl
-                if (acl.Groups != null && acl.Groups.Count > 0)
-                    existingAcl.Groups.RemoveAll(a => acl.Groups.Any(au => au.Id == a.Id));
+                if (acl.G != null && acl.G.Count > 0)
+                    existingAcl.G.RemoveAll(a => acl.G.Any(au => au.Id == a.Id));
             }
             //Trigger setter cleanup
             this.Acls = new List<ACL>(this.Acls);

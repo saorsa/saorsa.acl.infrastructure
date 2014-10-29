@@ -1,23 +1,33 @@
 ﻿namespace Saorsa.ACL.Model
 {
     using System.Collections.Generic;
-    using System.Linq;
-
+    /// <summary>
+    /// Describes an access control list containing of:
+    /// Action (Read/Write, etc...)
+    /// List of users allowed to perform the action
+    /// List of groups allowed to perform the action
+    /// </summary>
     public class ACL
     {
-        public ACLAction Action { get; set; }
-        public virtual List<AclGroup> Groups { get; set; }
-        public virtual List<AclUser> Users { get; set; }
+        public virtual ACLAction Action { get; set; }
+        /// <summary>
+        /// A list of Groups that can perform the action
+        /// </summary>
+        public virtual List<AclGroup> G { get; set; }
+        /// <summary>
+        /// A list of users that can perform the action
+        /// </summary>
+        public virtual List<AclUser> U { get; set; }
         public ACL()
         {
-            Groups = new List<AclGroup>();
-            Users = new List<AclUser>();
+            G = new List<AclGroup>();
+            U = new List<AclUser>();
         }
         public ACL(ACLAction action, List<AclUser> users, List<AclGroup> groups)
         {
             Action = action;
-            Users = users;
-            Groups = groups;
+            U = users;
+            G = groups;
         }
     }
 }
