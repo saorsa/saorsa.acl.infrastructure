@@ -4,10 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Saorsa.ACL.Tests.Interception.Handlers
 {
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using System.Text;
-    using System.Text.RegularExpressions;
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.InterceptionExtension;
     using Saorsa.ACL.Interception;
@@ -19,6 +17,21 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
     public class MyUpdateService : IMyService
     {
         public string UserId { get; set; }
+        string IAcl.GetEntityAcl<T>(T entity)
+        {
+            return GetEntityAcl(entity);
+        }
+
+        public string AddAcl<T>(T entity) where T : AclBase
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RemoveAcl<T>(T entity) where T : AclBase
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetEntityAcl<T>(T entity)
         {
             throw new NotImplementedException();
@@ -39,7 +52,7 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                                     new ACLGroup
                                     {
                                         Id = 2
-                                    },
+                                    }
                                 }
                    };
             return new ACLUser
@@ -54,50 +67,55 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                                     new ACLGroup
                                     {
                                         Id = 4
-                                    },
+                                    }
                                 }
             };
         }
 
-        public MyDomainObject GetAllowed()
+        public AclDomainObject GetAllowed()
         {
             throw new NotImplementedException();
         }
 
-        public MyDomainObject GetNotAllowed()
+        public AclDomainObject GetNotAllowed()
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<MyDomainObject> GetAllAsIQueryable()
+        public IQueryable<AclDomainObject> GetAllAsIQueryable()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<MyDomainObject> GetAllAsIEnumerable()
+        public IEnumerable<AclDomainObject> GetAllAsIEnumerable()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<MyDomainObject> GetAllAsIEnumerable_FiveHundredThousandRecords()
+        public IEnumerable<AclDomainObject> GetAllAsIEnumerable_FiveHundredThousandRecords()
         {
             throw new NotImplementedException();
         }
         [FilterUpdate]
-        public void UpdateNoArguments(MyDomainObject obj)
+        public void UpdateNoArguments(AclDomainObject obj)
         {
         }
         [FilterUpdate(new []{"controlled"})]
-        public void UpdateArgumentsList(MyDomainObject notControlled, MyDomainObject controlled)
+        public void UpdateArgumentsList(AclDomainObject notControlled, AclDomainObject controlled)
         {
         }
         [FilterUpdate(new[] { "blabla" })]
-        public void UpdateArgumentsListWrongArgumentName(MyDomainObject obj, MyDomainObject notControlled)
+        public void UpdateArgumentsListWrongArgumentName(AclDomainObject obj, AclDomainObject notControlled)
         {
         }
         [FilterUpdate(new[] { "controlled" })]
         public void UpdateArgumentsListWrongArgumentType(object obj, object controlled)
         {
+        }
+        [FilterUpdate(new[] { "domainObjects" })]
+        public void UpdateEnumerableArgumentsList(IEnumerable<AclDomainObject> domainObjects)
+        {
+            
         }
     }
 
@@ -118,7 +136,7 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
         public void Check_UpdateAllowed_NoArgumentsList()
         {
             var service = _container.Resolve<IMyService>();
-            service.UpdateNoArguments(new MyDomainObject
+            service.UpdateNoArguments(new AclDomainObject
             {
                 Acls = new List<ACL>
                                       {
@@ -162,7 +180,7 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
         public void Check_ArgumentsList_Wrong_Argument_Name_Exception_Should_Be_Raized()
         {
             var service = _container.Resolve<IMyService>();
-            var domainObject = new MyDomainObject();
+            var domainObject = new AclDomainObject();
             service.UpdateArgumentsListWrongArgumentName(domainObject, domainObject);
         }
         [ExpectedException(typeof(ArgumentException))]
@@ -178,7 +196,7 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
         {
             var service = _container.Resolve<IMyService>();
             service.UserId = "deny";
-            service.UpdateNoArguments(new MyDomainObject
+            service.UpdateNoArguments(new AclDomainObject
                            {
                                Acls = new List<ACL>
                                       {
@@ -222,7 +240,7 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
         {
             var service = _container.Resolve<IMyService>();
             #region Domain Object Definition
-            var domainObject = new MyDomainObject
+            var domainObject = new AclDomainObject
                                {
                                    Acls = new List<ACL>
                                           {
@@ -269,7 +287,7 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
         {
             var service = _container.Resolve<IMyService>();
             #region Domain Object Definition
-            var domainObject = new MyDomainObject
+            var domainObject = new AclDomainObject
             {
                 Acls = new List<ACL>
                                           {
@@ -309,6 +327,97 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
             service.UpdateArgumentsList(domainObject, domainObject);
             //No exception expected
             Assert.IsTrue(true);
+        }
+        [TestMethod]
+        public void Check_UpdateAllowed_EnumerableArgumentsList()
+        {
+            var service = _container.Resolve<IMyService>();
+            #region Domain Object Definition
+            var domainObject = new AclDomainObject
+            {
+                Acls = new List<ACL>
+                                          {
+                                              new ACL
+                                              {
+                                                  Action = ACLAction.Read,
+                                                  U = new List<AclUser>
+                                                          {
+                                                              new AclUser("1")
+                                                          },
+                                                  G = new List<AclGroup>
+                                                           {
+                                                               new AclGroup
+                                                               {
+                                                                   Id = 2
+                                                               }
+                                                           }
+                                              },
+                                              new ACL
+                                              {
+                                                  Action = ACLAction.Write,
+                                                  U = new List<AclUser>
+                                                          {
+                                                              new AclUser("7")
+                                                          },
+                                                  G = new List<AclGroup>
+                                                           {
+                                                               new AclGroup
+                                                               {
+                                                                   Id = 2
+                                                               }
+                                                           }
+                                              }
+                                          }
+            };
+            #endregion
+            service.UpdateEnumerableArgumentsList(new List<AclDomainObject> { domainObject, domainObject });
+            //No exception expected
+            Assert.IsTrue(true);
+        }
+        [ExpectedException(typeof(AclSecurityException))]
+        [TestMethod]
+        public void Check_UpdateNotAllowed_EnumerableArgumentsList()
+        {
+            var service = _container.Resolve<IMyService>();
+            #region Domain Object Definition
+            var domainObject = new AclDomainObject
+            {
+                Acls = new List<ACL>
+                                          {
+                                              new ACL
+                                              {
+                                                  Action = ACLAction.Read,
+                                                  U = new List<AclUser>
+                                                          {
+                                                              new AclUser("1")
+                                                          },
+                                                  G = new List<AclGroup>
+                                                           {
+                                                               new AclGroup
+                                                               {
+                                                                   Id = 2
+                                                               }
+                                                           }
+                                              },
+                                              new ACL
+                                              {
+                                                  Action = ACLAction.Write,
+                                                  U = new List<AclUser>
+                                                          {
+                                                              new AclUser("7")
+                                                          },
+                                                  G = new List<AclGroup>
+                                                           {
+                                                               new AclGroup
+                                                               {
+                                                                   Id = 6
+                                                               }
+                                                           }
+                                              }
+                                          }
+            };
+            #endregion
+            service.UpdateEnumerableArgumentsList(new List<AclDomainObject> { domainObject, domainObject });
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace Saorsa.ACL.Interception.Handlers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Saorsa.ACL.Interception.EF.Model;
     using Saorsa.ACL.Interception.Exceptions;
@@ -35,13 +36,13 @@ namespace Saorsa.ACL.Interception.Handlers
                 }
                 foreach (var parameter in _argumentNames)
                 {
-                    var obj = input.Arguments[parameter] as AclBase;
-                    if(obj == null)
-                        throw new ArgumentException(string.Format("The parameter {0} cannot be controlled, because it is not of the type AclBase.",parameter),parameter);
-                    if(!AssertAclRightsHelper.CanWrite(obj.Acl, user.Id, user.Groups))
+                    var canBeControlled = input.Arguments[parameter] is AclBase || input.Arguments[parameter] is IEnumerable<AclBase>;
+                    if (!canBeControlled)
                     {
-                        throw new AclSecurityException(string.Format("You cannot update an ACL controlled parameter {0}, because you or your groups are not in it's Access Control List", parameter), ACLAction.Write);
+                        throw new ArgumentException(string.Format("The parameter {0} cannot be controlled, because it is not of the type AclBase.", parameter), parameter);
                     }
+                    AssertAclObject(input, parameter, user);
+                    AssertAclEnumerable(input, parameter, user);
                 }
             }
             else
@@ -59,6 +60,24 @@ namespace Saorsa.ACL.Interception.Handlers
 
         }
 
+        private static void AssertAclObject(IMethodInvocation input, string parameter, ACLUser user)
+        {
+            var obj = input.Arguments[parameter] as AclBase;
+           
+            if (obj != null && !AssertAclRightsHelper.CanWrite(obj.Acl, user.Id, user.Groups))
+            {
+                throw new AclSecurityException(string.Format("You cannot update an ACL controlled parameter {0}, because you or your groups are not in it's Access Control List.", parameter), ACLAction.Write);
+            }
+        }
+        private static void AssertAclEnumerable(IMethodInvocation input, string parameter, ACLUser user)
+        {
+            var obj = input.Arguments[parameter] as IEnumerable<AclBase>;
+
+            if (obj != null && obj.Any(aclBase => !AssertAclRightsHelper.CanWrite(aclBase.Acl, user.Id, user.Groups)))
+            {
+                throw new AclSecurityException(string.Format("You cannot update the IEnumerable ACL controlled parameter {0}, because you or your groups are not in the Access Control List of an object inside it.", parameter), ACLAction.Write);
+            }
+        }
         int ICallHandler.Order { get; set; }
     }
 }

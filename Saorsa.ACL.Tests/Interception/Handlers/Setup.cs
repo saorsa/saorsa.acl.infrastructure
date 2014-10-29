@@ -6,21 +6,22 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
     using Saorsa.ACL.Interception;
     using Saorsa.ACL.Interception.EF.Model;
 
-    public class MyDomainObject : AclBase
+    public class AclDomainObject : AclBase
     {
         public string Name { get; set; }
     }
     public interface IMyService : IAcl
     {
-        MyDomainObject GetAllowed();
-        MyDomainObject GetNotAllowed();
-        IQueryable<MyDomainObject> GetAllAsIQueryable();
-        IEnumerable<MyDomainObject> GetAllAsIEnumerable();
-        IEnumerable<MyDomainObject> GetAllAsIEnumerable_FiveHundredThousandRecords();
-        void UpdateNoArguments(MyDomainObject obj);
-        void UpdateArgumentsList(MyDomainObject obj, MyDomainObject controlled);
-        void UpdateArgumentsListWrongArgumentName(MyDomainObject obj, MyDomainObject controlled);
+        AclDomainObject GetAllowed();
+        AclDomainObject GetNotAllowed();
+        IQueryable<AclDomainObject> GetAllAsIQueryable();
+        IEnumerable<AclDomainObject> GetAllAsIEnumerable();
+        IEnumerable<AclDomainObject> GetAllAsIEnumerable_FiveHundredThousandRecords();
+        void UpdateNoArguments(AclDomainObject obj);
+        void UpdateArgumentsList(AclDomainObject obj, AclDomainObject controlled);
+        void UpdateArgumentsListWrongArgumentName(AclDomainObject obj, AclDomainObject controlled);
         void UpdateArgumentsListWrongArgumentType(object obj, object controlled);
+        void UpdateEnumerableArgumentsList(IEnumerable<AclDomainObject> domainObjects);
     }
 
 }

@@ -8,12 +8,28 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
     using System.Linq;
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.InterceptionExtension;
+    using Saorsa.ACL.Interception;
     using Saorsa.ACL.Interception.EF.Model;
     using Saorsa.ACL.Interception.Handlers.Attributes;
     using Saorsa.ACL.Model;
     public class MyReadService : IMyService
     {
         public string UserId { get; set; }
+        string IAcl.GetEntityAcl<T>(T entity)
+        {
+            return GetEntityAcl(entity);
+        }
+
+        public string AddAcl<T>(T entity) where T : AclBase
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RemoveAcl<T>(T entity) where T : AclBase
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetEntityAcl<T>(T entity)
         {
             throw new NotImplementedException();
@@ -38,9 +54,9 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                    };
         }
         [FilterRead]
-        public MyDomainObject GetAllowed()
+        public AclDomainObject GetAllowed()
         {
-            return new MyDomainObject
+            return new AclDomainObject
                    {
                        Name = "My allowed domain object",
                        Acls = new List<ACL>
@@ -57,9 +73,9 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                    };
         }
         [FilterRead]
-        public MyDomainObject GetNotAllowed()
+        public AclDomainObject GetNotAllowed()
         {
-            return new MyDomainObject
+            return new AclDomainObject
             {
                 Name = "This should not be returned",
                 Acls = new List<ACL>
@@ -71,28 +87,28 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
                               }
             };
         }
-        [FilterRead(typeof(MyDomainObject))]
-        public IQueryable<MyDomainObject> GetAllAsIQueryable()
+        [FilterRead(typeof(AclDomainObject))]
+        public IQueryable<AclDomainObject> GetAllAsIQueryable()
         {
-            return new List<MyDomainObject>
+            return new List<AclDomainObject>
                    {
                        GetAllowed(),
                        GetNotAllowed()
                    }.AsQueryable();
         }
-        [FilterRead(typeof(MyDomainObject))]
-        public IEnumerable<MyDomainObject> GetAllAsIEnumerable()
+        [FilterRead(typeof(AclDomainObject))]
+        public IEnumerable<AclDomainObject> GetAllAsIEnumerable()
         {
-            return new List<MyDomainObject>
+            return new List<AclDomainObject>
                    {
                        GetAllowed(),
                        GetNotAllowed()
                    }.AsQueryable();
         }
-        [FilterRead(typeof(MyDomainObject))]
-        public IEnumerable<MyDomainObject> GetAllAsIEnumerable_FiveHundredThousandRecords()
+        [FilterRead(typeof(AclDomainObject))]
+        public IEnumerable<AclDomainObject> GetAllAsIEnumerable_FiveHundredThousandRecords()
         {
-            var list = new List<MyDomainObject>(10000);
+            var list = new List<AclDomainObject>(10000);
             for (int i = 0; i < 249999; i++)
             {
                 list.Add(GetAllowed());
@@ -104,22 +120,27 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
             return list;
         }
 
-        public void UpdateNoArguments(MyDomainObject obj)
+        public void UpdateNoArguments(AclDomainObject obj)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateArgumentsList(MyDomainObject obj, MyDomainObject notControlled)
+        public void UpdateArgumentsList(AclDomainObject obj, AclDomainObject notControlled)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateArgumentsListWrongArgumentName(MyDomainObject obj, MyDomainObject notControlled)
+        public void UpdateArgumentsListWrongArgumentName(AclDomainObject obj, AclDomainObject notControlled)
         {
             throw new NotImplementedException();
         }
 
         public void UpdateArgumentsListWrongArgumentType(object obj, object controlled)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateEnumerableArgumentsList(IEnumerable<AclDomainObject> domainObjects)
         {
             throw new NotImplementedException();
         }

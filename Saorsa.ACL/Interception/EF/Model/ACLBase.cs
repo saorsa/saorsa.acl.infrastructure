@@ -16,8 +16,12 @@
         private List<ACL> _acls;
         public string Acl { get; set; }
         public bool Visible { get; set; }
+        #region Basic Audit Properties
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
+        public string UpdatedBy { get; set; }
+        public string CreatedBy { get; set; }
+        #endregion
         [NotMapped]
         public List<ACL> Acls
         {
@@ -36,6 +40,8 @@
                 this._acls = aclCleanedUpValue;
             }
         }
+
+
         /// <summary>
         /// Groups all action permissions into one acl (if any)
         /// </summary>
