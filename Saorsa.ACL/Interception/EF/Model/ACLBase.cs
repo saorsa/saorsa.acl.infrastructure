@@ -12,7 +12,7 @@
     public class AclBase
     {
         [Key]
-        public int Id { get; set; }
+        public long Id { get; set; }
         private List<ACL> _acls;
         public string Acl { get; set; }
         public bool Visible { get; set; }
