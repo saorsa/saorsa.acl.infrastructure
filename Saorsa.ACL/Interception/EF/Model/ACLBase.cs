@@ -11,6 +11,10 @@
 
     public class AclBase
     {
+        public AclBase()
+        {
+            Visible = true;
+        }
         [Key]
         public long Id { get; set; }
         private List<ACL> _acls;
