@@ -14,12 +14,22 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
     using Saorsa.ACL.Interception.Handlers.Attributes;
     using Saorsa.ACL.Model;
 
-    public class MyUpdateService : IMyService
+    public class MyUpdateService :  IMyService
     {
         public string UserId { get; set; }
         string IAcl.GetEntityAcl<T>(T entity)
         {
             return GetEntityAcl(entity);
+        }
+
+        public string AddAcl<T>(T entity, ACL acl) where T : AclBase
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RemoveAcl<T>(T entity, ACL acl) where T : AclBase
+        {
+            throw new NotImplementedException();
         }
 
         public string AddAcl<T>(T entity) where T : AclBase
