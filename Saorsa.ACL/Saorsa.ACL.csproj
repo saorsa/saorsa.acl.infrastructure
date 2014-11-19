@@ -90,7 +90,8 @@
     <Compile Include="Model\ACLAction.cs" />
     <Compile Include="Model\ACL.cs" />
     <Compile Include="Model\ACLGroup.cs" />
-    <Compile Include="Model\ACLUser.cs" />
+    <Compile Include="Model\AclUser.cs" />
+    <Compile Include="Model\AclUserBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -1,25 +1,15 @@
 ﻿namespace Saorsa.ACL.Model
 {
-    public class AclUser
+    public class AclUser : AclUserBase
     {
         public AclUser()
         {
             
         }
-        public AclUser(string id)
-        {
-            Id = id;
-        }
 
-        public virtual string Id { get; set; }
-        public override bool Equals(object obj)
+        public AclUser(string id) : base(id)
         {
-            return Id == ((AclUser) obj).Id;
-        }
-
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
+            
         }
     }
 }
