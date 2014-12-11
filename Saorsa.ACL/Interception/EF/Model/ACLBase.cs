@@ -16,15 +16,15 @@
             Visible = true;
         }
         [Key]
-        public long Id { get; set; }
+        public  virtual long Id { get; set; }
         private List<ACL> _acls;
-        public string Acl { get; set; }
-        public bool Visible { get; set; }
+        public  virtual string Acl { get; set; }
+        public  virtual bool Visible { get; set; }
         #region Basic Audit Properties
-        public DateTime CreatedOn { get; set; }
-        public DateTime UpdatedOn { get; set; }
-        public string UpdatedBy { get; set; }
-        public string CreatedBy { get; set; }
+        public virtual DateTime CreatedOn { get; set; }
+        public virtual DateTime UpdatedOn { get; set; }
+        public virtual string UpdatedBy { get; set; }
+        public virtual string CreatedBy { get; set; }
         #endregion
         [NotMapped]
         public List<ACL> Acls
