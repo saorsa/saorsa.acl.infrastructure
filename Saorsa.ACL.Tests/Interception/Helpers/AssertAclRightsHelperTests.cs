@@ -1,13 +1,12 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Saorsa.ACL.Tests.Interception.Helpers
 {
     using System.Collections.Generic;
     using Saorsa.ACL.Interception.EF.Model;
-    using Saorsa.ACL.Interception.Handlers;
     using Saorsa.ACL.Interception.Helpers;
     using Saorsa.ACL.Model;
+    using Saorsa.ACL.Tests.Interception.EF;
 
     [TestClass]
     public class AssertAclRightsHelperTests
@@ -17,7 +16,7 @@ namespace Saorsa.ACL.Tests.Interception.Helpers
         [TestInitialize]
         public void Initialize()
         {
-            this._aclBase = new AclBase
+            this._aclBase = new TestAclBaseImplementation
             {
                 Acls = new List<ACL>
                                              {

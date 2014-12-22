@@ -74,6 +74,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Interception\EF\ACLBaseTests.cs" />
+    <Compile Include="Interception\EF\TestAclBaseImplementation.cs" />
     <Compile Include="Interception\Handlers\FilterUpdateTest.cs" />
     <Compile Include="Interception\Handlers\FilterReadTest.cs" />
     <Compile Include="Interception\Handlers\Setup.cs" />

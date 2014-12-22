@@ -9,11 +9,11 @@
     [TestClass]
     public class AclBaseTests
     {
-        private AclBase _aclBase = new AclBase();
+        private AclBase _aclBase = new TestAclBaseImplementation();
         [TestInitialize]
         public void Initialize()
         {
-           this._aclBase = new AclBase
+           this._aclBase = new TestAclBaseImplementation
                                   {
                                       Acls = new List<ACL>
                                              {
@@ -229,7 +229,7 @@
             Assert.AreEqual(4, _aclBase.Acls.Last().G.Count, "The add method should not add an additional write acl, nor users or groups, since they are present.");
             Assert.AreEqual(4, _aclBase.Acls.Last().U.Count, "The add method should not add an additional write acl, nor users or groups, since they are present.");
             //Test empty ACL add.
-            var acl = new AclBase();
+            var acl = new TestAclBaseImplementation();
             acl.AddAcl(new ACL(ACLAction.Write, new List<AclUser> { new AclUser("7") }, new List<AclGroup> { new AclGroup { Id = 7 } }));
             acl.AddAcl(new ACL(ACLAction.Write, new List<AclUser> { new AclUser("7") }, new List<AclGroup> { new AclGroup { Id = 7 } }));
             acl.AddAcl(new ACL(ACLAction.Write, new List<AclUser> { new AclUser("7") }, new List<AclGroup> { new AclGroup { Id = 7 } }));

@@ -9,17 +9,17 @@
     using Saorsa.ACL.Interception.Helpers;
     using Saorsa.ACL.Model;
 
-    public class AclBase
+    public abstract class AclBase
     {
-        public AclBase()
+        protected AclBase()
         {
             Visible = true;
         }
         [Key]
         public  virtual long Id { get; set; }
         private List<ACL> _acls;
-        public  virtual string Acl { get; set; }
-        public  virtual bool Visible { get; set; }
+        public virtual string Acl { get; set; }
+        public virtual bool Visible { get; set; }
         #region Basic Audit Properties
         public virtual DateTime CreatedOn { get; set; }
         public virtual DateTime UpdatedOn { get; set; }
