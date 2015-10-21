@@ -8,8 +8,7 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
     using System.Text;
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.InterceptionExtension;
-    using Saorsa.ACL.Interception;
-    using Saorsa.ACL.Interception.EF.Model;
+    using ACL.Interception.EF.Model;
     using Saorsa.ACL.Interception.Exceptions;
     using Saorsa.ACL.Interception.Handlers.Attributes;
     using Saorsa.ACL.Model;
@@ -17,35 +16,7 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
     public class MyUpdateService :  IMyService
     {
         public string UserId { get; set; }
-        string IAcl.GetEntityAcl<T>(T entity)
-        {
-            return GetEntityAcl(entity);
-        }
-
-        public string AddAcl<T>(T entity, ACL acl) where T : AclBase
-        {
-            throw new NotImplementedException();
-        }
-
-        public string RemoveAcl<T>(T entity, ACL acl) where T : AclBase
-        {
-            throw new NotImplementedException();
-        }
-
-        public string AddAcl<T>(T entity) where T : AclBase
-        {
-            throw new NotImplementedException();
-        }
-
-        public string RemoveAcl<T>(T entity) where T : AclBase
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetEntityAcl<T>(T entity)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public ACLUser GetUser()
         {
