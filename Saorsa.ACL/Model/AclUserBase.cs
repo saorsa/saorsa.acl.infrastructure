@@ -14,7 +14,12 @@
         public virtual string Id { get; set; }
         public override bool Equals(object obj)
         {
-            return Id == ((AclUserBase) obj).Id;
+            var @base = obj as AclUserBase;
+            if (@base != null)
+            {
+                return Id == @base.Id;
+            }
+            return false;
         }
 
         public override int GetHashCode()

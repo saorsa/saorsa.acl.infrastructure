@@ -15,26 +15,7 @@ namespace Saorsa.ACL.Tests.Interception.Handlers
     public class MyReadService : IMyService
     {
         public string UserId { get; set; }
-        string IAcl.GetEntityAcl<T>(T entity)
-        {
-            return GetEntityAcl(entity);
-        }
-
-        public string AddAcl<T>(T entity, ACL acl) where T : AclBase
-        {
-            throw new NotImplementedException();
-        }
-
-        public string RemoveAcl<T>(T entity, ACL acl) where T : AclBase
-        {
-            throw new NotImplementedException();
-        }
-
-        public string AddAcl<T>(T entity) where T : AclBase
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public string RemoveAcl<T>(T entity) where T : AclBase
         {
             throw new NotImplementedException();

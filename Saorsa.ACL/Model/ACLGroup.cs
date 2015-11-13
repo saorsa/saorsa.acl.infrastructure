@@ -13,5 +13,13 @@
                 return Id == ((AclGroup)obj).Id;
             return base.Equals(obj);
         }
+
+        public AclGroup ShallowCopy()
+        {
+            return new AclGroup
+                   {
+                       Id = Id
+                   };
+        }
     }
 }
