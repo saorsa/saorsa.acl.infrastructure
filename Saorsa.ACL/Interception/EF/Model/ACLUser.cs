@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using Saorsa.ACL.Model;
     [Table("AclUsers")]
-    public class ACLUser : AclUserBase
+    public class ACLUser : AclUser
     {
         public ICollection<ACLGroup> Groups { get; set; }
     }

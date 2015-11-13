@@ -6,6 +6,7 @@
     {
         [Key]
         public int Id { get; set; }
+
         public override bool Equals(object obj)
         {
             if(obj is AclGroup)
