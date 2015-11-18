@@ -11,5 +11,20 @@
         {
             
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is AclUser)
+                return Id == ((AclUser)obj).Id;
+            return base.Equals(obj);
+        }
+
+        public AclUser ShallowCopy()
+        {
+            return new AclUser
+            {
+                Id = Id
+            };
+        }
     }
 }

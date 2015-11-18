@@ -18,11 +18,13 @@
         /// A list of users that can perform the action
         /// </summary>
         public virtual List<AclUser> U { get; set; }
+
         public ACL()
         {
             G = new List<AclGroup>();
             U = new List<AclUser>();
         }
+
         public ACL(ACLAction action, List<AclUser> users, List<AclGroup> groups)
         {
             Action = action;

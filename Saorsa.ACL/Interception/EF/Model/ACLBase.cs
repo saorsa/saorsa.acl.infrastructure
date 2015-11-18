@@ -31,11 +31,12 @@
         {
             get
             {
-                if(string.IsNullOrEmpty(Acl))
-                    _acls = new List<ACL>();
+                if (this._acls == null)
+                {
+                    _acls = string.IsNullOrEmpty(Acl) ? new List<ACL>() : JsonConvert.DeserializeObject<List<ACL>>(Acl);
+                }
                 
-                return this._acls ?? (this._acls = JsonConvert.DeserializeObject<List<ACL>>(Acl));
-
+                return this._acls;
             }
             set
             {
@@ -103,14 +104,17 @@
             else
             {
                 //Ensure that there are no duplicating items
-                acl.U = acl.U.Distinct(new AclUsersComparer()).ToList();
-                acl.G = acl.G.Distinct(new AclGroupComparer()).ToList();
+                if (acl.U != null && acl.U.Count > 0)
+                    acl.U = acl.U.Distinct(new AclUsersComparer()).ToList();
+                if (acl.G != null && acl.G.Count > 0)
+                    acl.G = acl.G.Distinct(new AclGroupComparer()).ToList();
                 this.Acls.Add(acl);
             }
             //Trigger setter cleanup
             this.Acls=new List<ACL>(this.Acls);
 
         }
+
         public void RemoveAcl(ACL acl)
         {
             //Todo when testing check if the acl is also applied to the string value
