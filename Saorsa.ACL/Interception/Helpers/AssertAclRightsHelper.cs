@@ -20,6 +20,10 @@ namespace Saorsa.ACL.Interception.Helpers
         }
         public static bool CanRead(string entityAcl, string userId, IEnumerable<AclGroup> userGroups)
         {
+            if (entityAcl == null)
+            {
+                return false;
+            }
             var acl = JsonConvert.DeserializeObject<List<ACL>>(entityAcl);
             return acl.Any(a => (a.Action == ACLAction.Write || a.Action == ACLAction.Read) &&
                                 (
