@@ -20,6 +20,7 @@ namespace Saorsa.ACL.Interception.Helpers
         }
         public static bool CanRead(string entityAcl, string userId, IEnumerable<AclGroup> userGroups)
         {
+            //When there's no ACL list, reading should not be allowed.
             if (string.IsNullOrEmpty(entityAcl))
             {
                 return false;
